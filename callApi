@@ -1,0 +1,28 @@
+       checkinternet();
+       Loading dialog start....
+       Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiInterface.JSONURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+          final ApiInterface api = retrofit.create(ApiInterface.class);
+          Call<String> call = api.productprice_select("1");
+
+          call.enqueue(new Callback<String>() {
+              @Override
+              public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                  Loading dialog stop....
+                  if (response.isSuccessful()) {
+                      if (response.body() != null) {
+                          doprocess();
+                      } else {
+                          popup ""
+                      }
+                  }
+              }
+
+              @Override
+              public void onFailure(Call<String> call, Throwable t) {
+                Loading dialog stop....
+                popup ""
+              }
+          });
